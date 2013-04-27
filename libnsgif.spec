@@ -10,6 +10,7 @@ License:	MIT
 Group:		Libraries
 Source0:	http://download.netsurf-browser.org/libs/releases/%{name}-%{version}-src.tar.gz
 # Source0-md5:	f3d4295be77db30da1f4167b270bb4d9
+Patch0:		lib.patch
 URL:		http://www.netsurf-browser.org/projects/libnsgif/
 BuildRequires:	netsurf-buildsystem
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -47,6 +48,7 @@ Statyczna biblioteka libnsgif.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
@@ -60,12 +62,14 @@ CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
+	lib=%{_lib} \
 	PREFIX=%{_prefix} \
 	COMPONENT_TYPE=lib-shared \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with static_libs}
 %{__make} install \
+	lib=%{_lib} \
 	PREFIX=%{_prefix} \
 	COMPONENT_TYPE=lib-static \
 	DESTDIR=$RPM_BUILD_ROOT
