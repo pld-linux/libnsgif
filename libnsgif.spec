@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	static_libs	# don't build static library
-#
+
 Summary:	Decoding library for the GIF format
 Name:		libnsgif
 Version:	0.1.0
@@ -49,26 +49,26 @@ Statyczna biblioteka libnsgif.
 %setup -q
 
 %build
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-shared Q='' \
-	CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
+CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
+%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-shared Q=''
+
 %if %{with static_libs}
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-static Q='' \
-	CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
+CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
+%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-static Q=''
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
-	COMPONENT_TYPE=lib-shared
+	COMPONENT_TYPE=lib-shared \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with static_libs}
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
-	COMPONENT_TYPE=lib-static
+	COMPONENT_TYPE=lib-static \
+	DESTDIR=$RPM_BUILD_ROOT
 %endif
 
 %clean
@@ -79,16 +79,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libnsgif.so.*.*.*
+%ghost %{_libdir}/libnsgif.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_includedir}/*.h
-%{_pkgconfigdir}/*pc
+%{_libdir}/libnsgif.so
+%{_includedir}/libnsgif.h
+%{_pkgconfigdir}/libnsgif.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libnsgif.a
 %endif
