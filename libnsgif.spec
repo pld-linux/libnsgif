@@ -49,9 +49,11 @@ Statyczna biblioteka libnsgif.
 %setup -q
 
 %build
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-shared
+%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-shared Q='' \
+	CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
 %if %{with static_libs}
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-static
+%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-static Q='' \
+	CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
 %endif
 
 %install
