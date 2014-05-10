@@ -3,6 +3,7 @@
 %bcond_without	static_libs	# don't build static library
 
 Summary:	Decoding library for the GIF format
+Summary(pl.UTF-8):	Biblioteka dekodująca pliki w formacie GIF
 Name:		libnsgif
 Version:	0.1.1
 Release:	1
@@ -19,6 +20,11 @@ Libnsgif is a decoding library for the GIF image file format, written
 in C. It was developed as part of the NetSurf project and is available
 for use by other software under the MIT licence.
 
+%description -l pl.UTF-8
+Libnsgif to napisana w C biblioteka dekodująca pliki obrazów w
+formacie GIF. Powstała jako część projektu NetSurf i jest dostępna do
+wykorzystania przez inne programy na licencji MIT.
+
 %package devel
 Summary:	libsgif library headers
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libnsgif
@@ -26,21 +32,21 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-This is the libraries, include files and other resources you can use
-to incorporate libnsgif into applications.
+This package contains the include files and other resources you can
+use to incorporate libnsgif into applications.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe pozwalające na używanie biblioteki libnsgif w swoich
 programach.
 
 %package static
-Summary:	libnsgif static libraries
-Summary(pl.UTF-8):	Statyczne biblioteki libnsgif
+Summary:	libnsgif static library
+Summary(pl.UTF-8):	Statyczna biblioteka libnsgif
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-This is package with static libnsgif libraries.
+This is package with static libnsgif library.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka libnsgif.
@@ -49,26 +55,34 @@ Statyczna biblioteka libnsgif.
 %setup -q
 
 %build
-CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-shared Q=''
+export CC="%{__cc}"
+export CFLAGS="%{rpmcflags}"
+export LDFLAGS="%{rpmldflags}"
+
+%{__make} \
+	Q= \
+	PREFIX=%{_prefix} \
+	COMPONENT_TYPE=lib-shared
 
 %if %{with static_libs}
-CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
-%{__make} PREFIX=%{_prefix} COMPONENT_TYPE=lib-static Q=''
+%{__make} \
+	Q= \
+	PREFIX=%{_prefix} \
+	COMPONENT_TYPE=lib-static
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
-	lib=%{_lib} \
 	PREFIX=%{_prefix} \
+	LIBDIR=%{_lib} \
 	COMPONENT_TYPE=lib-shared \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with static_libs}
 %{__make} install \
-	lib=%{_lib} \
 	PREFIX=%{_prefix} \
+	LIBDIR=%{_lib} \
 	COMPONENT_TYPE=lib-static \
 	DESTDIR=$RPM_BUILD_ROOT
 %endif
@@ -81,12 +95,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc COPYING
 %attr(755,root,root) %{_libdir}/libnsgif.so.*.*.*
-%ghost %{_libdir}/libnsgif.so.0
+%attr(755,root,root) %ghost %{_libdir}/libnsgif.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/libnsgif.so
+%attr(755,root,root) %{_libdir}/libnsgif.so
 %{_includedir}/libnsgif.h
 %{_pkgconfigdir}/libnsgif.pc
 
