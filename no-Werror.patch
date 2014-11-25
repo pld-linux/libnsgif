@@ -1,0 +1,13 @@
+--- libnsgif-0.1.1/Makefile~	2014-04-18 12:40:14.000000000 +0200
++++ libnsgif-0.1.1/Makefile	2014-11-25 19:31:16.082347185 +0100
+@@ -13,10 +13,6 @@
+ WARNFLAGS := -Wall -W -Wundef -Wpointer-arith -Wcast-align \
+ 	-Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes \
+ 	-Wmissing-declarations -Wnested-externs -pedantic
+-# BeOS/Haiku standard library headers create warnings
+-ifneq ($(TARGET),beos)
+-  WARNFLAGS := $(WARNFLAGS) -Werror
+-endif
+ CFLAGS := -D_BSD_SOURCE -I$(CURDIR)/include/ \
+ 	-I$(CURDIR)/src $(WARNFLAGS) $(CFLAGS)
+ ifneq ($(GCCVER),2)
