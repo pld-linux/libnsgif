@@ -73,12 +73,13 @@ export LDFLAGS="%{rpmldflags}"
 %endif
 
 %install
+rm -rf $RPM_BUILD_ROOT
+
 export AR="%{__ar}"
 export CC="%{__cc}"
 export CFLAGS="%{rpmcflags}"
 export LDFLAGS="%{rpmldflags}"
 
-rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	PREFIX=%{_prefix} \
 	LIBDIR=%{_lib} \
