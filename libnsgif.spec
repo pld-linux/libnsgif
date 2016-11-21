@@ -5,12 +5,12 @@
 Summary:	Decoding library for the GIF format
 Summary(pl.UTF-8):	Biblioteka dekodująca pliki w formacie GIF
 Name:		libnsgif
-Version:	0.1.3
+Version:	0.1.4
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://download.netsurf-browser.org/libs/releases/%{name}-%{version}-src.tar.gz
-# Source0-md5:	a7ae83a284ee29090e61cf9cd0fa4bb3
+# Source0-md5:	c4608d944f3a10ae236c8993c2d3b6d0
 URL:		http://www.netsurf-browser.org/projects/libnsgif/
 BuildRequires:	netsurf-buildsystem >= 1.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
