@@ -5,12 +5,12 @@
 Summary:	Decoding library for the GIF format
 Summary(pl.UTF-8):	Biblioteka dekodująca pliki w formacie GIF
 Name:		libnsgif
-Version:	0.2.1
+Version:	1.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://download.netsurf-browser.org/libs/releases/%{name}-%{version}-src.tar.gz
-# Source0-md5:	2d32be055a3521c276ecdb2dcebd4ce9
+# Source0-md5:	ec8d24735fdd06d674ff9e4e9482b804
 URL:		http://www.netsurf-browser.org/projects/libnsgif/
 BuildRequires:	netsurf-buildsystem >= 1.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -104,12 +104,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING
 %attr(755,root,root) %{_libdir}/libnsgif.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libnsgif.so.0
+%attr(755,root,root) %ghost %{_libdir}/libnsgif.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libnsgif.so
-%{_includedir}/libnsgif.h
+%{_includedir}/nsgif.h
 %{_pkgconfigdir}/libnsgif.pc
 
 %if %{with static_libs}
